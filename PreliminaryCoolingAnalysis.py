@@ -29,8 +29,22 @@ throatRadiusOfCurvature = 0.01 # [m] what is a good value for this?
 engineLength = 0.22464 # [m]
 nozzleExitRadius = 0.04178 # [m]
 
+# Engine Jacket Material
+library_thermal_conductivity = {
+    "copper C10100": 398,      # in W/m·K
+    "stainless_steel 304/316": 16,  # in W/m·K
+    "stainless_steel AISI 1045": 45,   # in W/m·K
+    "inconel 718": 11,      # in W/m·K
+    "aluminum 6061": 167,   # in W/m·K
+    "aluminum 7075": 130,   # in W/m·K
+    "aluminum 1050": 205,     # in W/m·K
+    "stainless_steel 310": 24  # in W/m·K
+}
+
+material_choice = "copper C10100"  # Change this to any other material from the library
+
 # Inner Jacket
-innerJacketThermalConductivity = 45 # [W/m/K]
+innerJacketThermalConductivity = library_thermal_conductivity.get(material_choice, 45)  # Default to 45 if invalid material
 innerJacketWallThickness = 0.002 # [m]
 
 # Combustion Gas
@@ -286,7 +300,7 @@ plt.plot(zpoints, coolantSideWallTemp)
 plt.plot(zpoints, coolantTemperature)
 plt.grid
 plt.gca().set_xlim([0, 0.25])
-plt.show
+plt.show()
 
 
 # TODO:
